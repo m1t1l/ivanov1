@@ -1,31 +1,29 @@
 import React from 'react';
 // import logo from './logo.svg';
 import './App.css';
+import { minD6From3 } from './dice';
+import Inventory from './inventory';
 
-const dice = (sides) => Math.random() * sides + 1 | 0
-const d6 = () => dice(6)
-const minD6From3 = () => {
-  const randomD6 = Array(3).fill(0).map(() => d6())
-  return randomD6.reduce((p, c) => p < c ? p : c)
+function RowFromObject(props) {
+  const v = props.value
+  console.dir(v)
+  const rows = typeof v === "string" ?
+    (<tr>
+      <td>{v}</td>
+    </tr>) :
+    Object.keys(v).map(key => (
+    <tr>
+      <td>{key}</td>
+      <td>{v[key]}</td>
+    </tr>))
+  return rows
 }
-const randomTables = () => {
-  const tables = []
-  const TABLES_COUNT = 10
-  for (let i = 0; i < TABLES_COUNT; i++) {
-    const table = []
-    for (let j = 0; j < 20; j++) table.push(`table_${i}_cell_${j}`)
-    tables.push(table)
-  }
-  return tables
+function Item(props) {
+  return (<span>{props.value}</span>)
 }
-
-
-// const stats = Array(6).fill(0).map(() => minD6From3())
-// const tables = randomTables()
-// console.log(stats)
-// console.dir(tables)
 function Table(props) {
-  const rows = props.value.map((v, i) => (<tr key={i*100+v}><td>{v}</td></tr>))
+  const objects = props.values
+  const rows = objects.map((v, i) => (<RowFromObject value={v}/>))
   return (
     <table>
       <tbody>
@@ -41,41 +39,55 @@ function Dice(props) {
 class App extends React.Component {
   constructor(props) {
     super(props)
-    this.tables = randomTables()
     this.rollDices = this.rollDices.bind(this)
     this.toggleDices = this.toggleDices.bind(this)
-    this.randomizeTables = this.randomizeTables.bind(this)
+    this.randomizeHero = this.randomizeHero.bind(this)
+    this.inventory = new Inventory()
     this.state = {
-      stats: [],
-      tablesIndices: [],
+      hero: this.inventory.createRandomHero(),
+      dices: [],
       showStats: true,
     }
   }
   rollDices() {
-    this.setState({stats: Array(6).fill(0).map(() => minD6From3())})
+    this.setState({dices: Array(6).fill(0).map(() => minD6From3())})
   }
   toggleDices() {
     this.setState({showStats: !this.state.showStats})
   }
-  randomizeTables() {
+  randomizeHero() {
     this.setState({
-      tablesIndices: this.tables.map(t => 
-        Math.random() * t.length | 0)
-      })
+      hero: this.inventory.createRandomHero()
+    })
   }
   render() {
-    const statsValues = this.state.tablesIndices.map((v, i) => 
-      this.tables[i][v])
-    const dices = this.state.stats.map((v, i) => <Dice key={i*10+v} value={v}/>)
+    const hero = Object.assign({
+      perks: {},
+      armors: {},
+      inventory: []
+    }, this.state.hero)
+    const inventoryItems = hero.inventory.map(v => <Item value={v}/>)
+    const dices = this.state.dices.map((v, i) => <Dice key={i*10+v} value={v}/>)
+    const armors = Object.keys(hero.armors).map(key => ({[key]: hero.armors[key].name}))
+    const armorValue = Object.keys(hero.armors).reduce((p, c) => hero.armors[p].defence + hero.armors[c].defence)
     const showStats = this.state.showStats
     return (
     <div className="App">
-      <button onClick={this.rollDices}>Кинуть кубики</button>
-      <button onClick={this.randomizeTables}>Взять случайные данные из таблиц</button>
+      <button onClick={this.randomizeHero}>Создать героя</button>
       <button onClick={this.toggleDices}>Скрыть/показать кубики</button>
-      <Table value={statsValues} />
-      <div className="dices">
-        {showStats ? dices : false}
+      <button onClick={this.rollDices}>Кинуть кубики</button>
+      <h2>Броня</h2>
+      <Table values={armors} />
+      <p className="Inventory">Защита: <span>{armorValue}</span></p>
+      <h2>Инвентарь</h2>
+      <p className="Inventory">
+        {inventoryItems}
+      </p>
+      <h2>Особенности</h2>
+      <Table values={hero.perks} />
+      <div className={showStats ? "dices" : "dices hidden"}>
+        <h2>Кубики</h2>
+        {dices}
       </div>
     </div>
     )
