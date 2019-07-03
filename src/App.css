@@ -9,10 +9,18 @@ h2,
 }
 h2 {
   text-align: center;
+  border-top: 1px solid #ddf;
 }
-table tr:nth-child(2n) td {
-  background-color: #eee;
+td:last-child {
+  width: 60%;
 }
+table tr td {
+  border-bottom: 1px solid #ddf;
+}
+table tr:last-child td {
+  border-bottom: none;
+}
+
 .App .Dice {
   border: 1px solid black;
   width: 1.5em;
@@ -23,6 +31,7 @@ table tr:nth-child(2n) td {
   text-align: center;
   line-height: 1.5em;
   border-radius: 0.4em;
+  background-color: #ddf;
 }
 .dices {
   width: 80%;
@@ -44,9 +53,7 @@ table tr:nth-child(2n) td {
 .Inventory span {
   margin: 0em 0.2em 0.2em 0;
   border-radius: 0.5em;
-/*   border: 1px solid white; */
   padding: 0.5em;
-  background-color: #eee;
-/*   line-height: 2.5em; */
+  background-color: #ddf;
   display: inline-block
 }

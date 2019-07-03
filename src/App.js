@@ -76,7 +76,7 @@ class App extends React.Component {
       <button onClick={this.randomizeHero}>Создать героя</button>
       <button onClick={this.toggleDices}>Скрыть/показать кубики</button>
       <button onClick={this.rollDices}>Кинуть кубики</button>
-      <h2>Броня</h2>
+      <h2>Защита</h2>
       <Table values={armors} />
       <p className="Inventory">Защита: <span>{armorValue}</span></p>
       <h2>Инвентарь</h2>
