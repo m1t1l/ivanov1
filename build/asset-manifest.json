@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/ivanov1/build/static/css/main.22cc60dd.chunk.css",
-    "main.js": "/ivanov1/build/static/js/main.94abd19e.chunk.js",
-    "main.js.map": "/ivanov1/build/static/js/main.94abd19e.chunk.js.map",
+    "main.js": "/ivanov1/build/static/js/main.803fda32.chunk.js",
+    "main.js.map": "/ivanov1/build/static/js/main.803fda32.chunk.js.map",
     "runtime~main.js": "/ivanov1/build/static/js/runtime~main.82fa3cba.js",
     "runtime~main.js.map": "/ivanov1/build/static/js/runtime~main.82fa3cba.js.map",
     "static/js/2.5ba73472.chunk.js": "/ivanov1/build/static/js/2.5ba73472.chunk.js",
     "static/js/2.5ba73472.chunk.js.map": "/ivanov1/build/static/js/2.5ba73472.chunk.js.map",
     "index.html": "/ivanov1/build/index.html",
-    "precache-manifest.23df51834226901928e3f5f107c13090.js": "/ivanov1/build/precache-manifest.23df51834226901928e3f5f107c13090.js",
+    "precache-manifest.779d6ab9d49ad8cb3ec20cd6242c972b.js": "/ivanov1/build/precache-manifest.779d6ab9d49ad8cb3ec20cd6242c972b.js",
     "service-worker.js": "/ivanov1/build/service-worker.js",
     "static/css/main.22cc60dd.chunk.css.map": "/ivanov1/build/static/css/main.22cc60dd.chunk.css.map"
   }
