@@ -1,5 +1,6 @@
 import { dice } from './dice'
 const d20 = () => dice(20) // 1 - 20
+const d8 = () => dice(8)
 const rand20 = () => d20() - 1 // 0 - 20
 
 class Inventory {
@@ -15,6 +16,11 @@ class Inventory {
       16: { name: "Шлем", defence: 1, slots: 1, kind: 1 },
       19: { name: "Щит", defence: 1, slots: 1, kind: 1 },
       20: { name: "Шлем и щит", defence: 2, slots: 2, kind: 1 },
+    }
+    this.WORLDVIEW = {
+      5: "Порядок",
+      15: "Нейтралитет",
+      20: "Хаос"
     }
     this.MAIN1 = [
       "Шест, 10фт",
@@ -316,10 +322,16 @@ class Inventory {
       if (d20 <= k) return this.SHIELDS[k]
     throw new Error(`${d20} - unknown shield`)
   }
+  getWorldView(d20) {
+    for (const k in this.WORLDVIEW) if (d20 <= k) return this.WORLDVIEW[k]
+    return new Error(`${d20} - unknown worldview`)
+  }
   createRandomHero() {
     let perks = []
     for (let p in this.PERKS) perks.push({ [p]: this.PERKS[p][rand20()] })
+    perks.push({"Мировоззрение": this.getWorldView(rand20())})
     return {
+      health: d8(),
       perks,
       armors: {
         "Броня": this.getArmor(d20()),

@@ -62,6 +62,7 @@ class App extends React.Component {
   }
   render() {
     const hero = Object.assign({
+      health: 0,
       perks: {},
       armors: {},
       inventory: []
@@ -70,6 +71,7 @@ class App extends React.Component {
     const dices = this.state.dices.map((v, i) => <Dice key={i*10+v} value={v}/>)
     const armors = Object.keys(hero.armors).map(key => ({[key]: hero.armors[key].name}))
     const armorValue = Object.keys(hero.armors).reduce((p, c) => hero.armors[p].defence + hero.armors[c].defence)
+    const health = this.state.hero.health
     const showStats = this.state.showStats
     return (
     <div className="App">
@@ -78,7 +80,7 @@ class App extends React.Component {
       <button onClick={this.rollDices}>Кинуть кубики</button>
       <h2>Защита</h2>
       <Table values={armors} />
-      <p className="Inventory">Защита: <span>{armorValue}</span></p>
+      <p className="Inventory">Защита: <span>{armorValue}</span>. Жизней: <span>{health}</span></p>
       <h2>Инвентарь</h2>
       <p className="Inventory">
         {inventoryItems}
